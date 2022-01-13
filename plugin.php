@@ -25,4 +25,4 @@ use KK\PaymentMethodsReport\Plugin;
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 // initialize main class, here all actions and filters are initialized
-Plugin::init();
+new Plugin(dirname(__FILE__), plugin_dir_url(__FILE__));
