@@ -5,6 +5,7 @@
 .gitattributes
 .github
 .gitignore
+.nvmrc
 .travis.yml
 .DS_Store
 Thumbs.db
