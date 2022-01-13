@@ -1,0 +1,35 @@
+{
+  "name": "payment-methods-report",
+  "title": "Payment Methods Report for WooCommerce",
+  "version": "0.1.0",
+  "description": "Adds a new report to the WooCommerce analytics section about used payment methods.",
+  "author": {
+    "name": "kingkero",
+    "url": "https://github.com/kingkero/"
+  },
+  "license": "GPL-3.0-or-later",
+  "keywords": [
+    "wordpress",
+    "woocommerce",
+    "report"
+  ],
+  "homepage": "https://github.com/kingkero/payment-methods-report-woocommerce",
+  "repository": {
+    "url": "https://github.com/kingkero/payment-methods-report-woocommerce"
+  },
+  "bugs": {
+    "url": "https://github.com/kingkero/payment-methods-report-woocommerce/issues"
+  },
+  "devDependencies": {
+    "@woocommerce/dependency-extraction-webpack-plugin": "1.6.0",
+    "@wordpress/scripts": "^19.2.2"
+  },
+  "scripts": {
+    "build": "wp-scripts build resources/assets/js/index.js --output-path=dist",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses",
+    "packages-update": "wp-scripts packages-update",
+    "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "start": "wp-scripts start resources/assets/js/index.js --output-path=dist"
+  }
+}

@@ -1,0 +1,4 @@
+.cache
+vendor
+dist
+node_modules
