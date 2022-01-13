@@ -1,0 +1,30 @@
+{
+  "name": "kingkero/payment-methods-report",
+  "type": "wpackagist-plugin",
+  "license": "GPL-3.0-or-later",
+  "keywords": [
+    "wordpress",
+    "woocommerce",
+    "report"
+  ],
+  "homepage": "https://github.com/kingkero/payment-methods-report-woocommerce",
+  "readme": "./README.md",
+  "authors": [
+    {
+      "name": "kingkero",
+      "homepage": "https://github.com/kingkero/",
+      "role": "developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "KK\\PaymentMethodsReport\\": "src/"
+    }
+  },
+  "require": {
+    "php" : ">=7.4"
+  },
+  "require-dev": {
+    "php-stubs/woocommerce-stubs": "^6.0"
+  }
+}
