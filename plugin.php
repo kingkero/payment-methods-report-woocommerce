@@ -14,7 +14,7 @@
  * WC requires at least:    6.0.0
  *
  * License:                 GNU General Public License v3.0
- * License URI:             http://www.gnu.org/licenses/gpl-3.0.html
+ * License URI:             https://www.gnu.org/licenses/gpl-3.0.html
  */
 
 declare(strict_types=1);
