@@ -1,5 +1,6 @@
 {
   "name": "kingkero/payment-methods-report",
+  "description": "Adds a new report to the WooCommerce analytics section about used payment methods.",
   "type": "wpackagist-plugin",
   "license": "GPL-3.0-or-later",
   "keywords": [
