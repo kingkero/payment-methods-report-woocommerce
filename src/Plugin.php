@@ -24,6 +24,7 @@ class Plugin
         $this->baseUri = $baseUri;
 
         add_action('admin_enqueue_scripts', [$this, 'enqueueIndex']);
+        add_filter('woocommerce_analytics_report_menu_items', [$this, 'reportPages']);
     }
 
     /**
@@ -70,5 +71,29 @@ class Plugin
         $options = require($infoPath);
 
         return array_merge($defaults, $options);
+    }
+
+    /**
+     * Add the report to navigation.
+     *
+     * @param array<int, array<string, mixed>> $reportPages
+     * @return array<int, array<string, mixed>>
+     */
+    public function reportPages(array $reportPages): array
+    {
+        $entry = [
+            'id' => 'payment-methods-used',
+            'title' => __('Payment Methods', 'payment-methods-report-woocommerce'),
+            'parent' => 'woocommerce-analytics',
+            'path' => '/analytics/payment-methods-used',
+        ];
+
+        /**
+         * Position 9 should still be above settings.
+         * If there are less than 9, will just insert at the end, see https://3v4l.org/5NdoM
+         */
+        array_splice($reportPages, 9, 0, [$entry]);
+
+        return $reportPages;
     }
 }
