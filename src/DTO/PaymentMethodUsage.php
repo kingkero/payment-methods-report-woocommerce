@@ -27,6 +27,11 @@ class PaymentMethodUsage implements JsonSerializable
 
     public function jsonSerialize(): array
     {
+        $relativePercent = '0.' . $this->relativeUsage;
+        if ($this->relativeUsage === 100) {
+            $relativePercent = '100';
+        }
+
         return [
             [
                 'display' => $this->name,
@@ -37,7 +42,7 @@ class PaymentMethodUsage implements JsonSerializable
                 'value' => $this->absoluteUsage,
             ],
             [
-                'display' => '0.' . $this->relativeUsage . ' %',
+                'display' => $relativePercent,
                 'value' => $this->relativeUsage,
             ],
             [

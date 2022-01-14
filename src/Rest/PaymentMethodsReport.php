@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace KK\PaymentMethodsReport\Rest;
 
+use Automattic\WooCommerce\Admin\Overrides\Order;
 use KK\PaymentMethodsReport\DTO\PaymentMethodUsage;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -16,6 +17,15 @@ class PaymentMethodsReport
 
     /** @var string */
     protected const BASE = 'report';
+
+    /** @var string[] */
+    protected const IGNORE_STATUS = [
+        'wc-pending',
+        'wc-on-hold',
+        'wc-cancelled',
+        'wc-refunded',
+        'wc-failed',
+    ];
 
     /**
      * Register the route used in this controller.
@@ -46,12 +56,7 @@ class PaymentMethodsReport
     {
         // TODO: use $request to filter response
 
-        $paypal = new PaymentMethodUsage('PayPal', 159, 25, 753.31);
-
-        $data = [
-            $paypal,
-            $paypal,
-        ];
+        $data = self::getNicePaymentMethodUsages();
 
         $response = new WP_REST_Response($data);
 
@@ -65,6 +70,66 @@ class PaymentMethodsReport
      */
     public static function getItemsPermissionsCheck(): bool
     {
+        return true;
         return current_user_can('view_woocommerce_reports');
+    }
+
+    protected static function getNicePaymentMethodUsages(): array
+    {
+        $data = self::getTotalPaymentMethodUsage();
+
+        $totalOrders = 0;
+        foreach ($data as $entry) {
+            $totalOrders += $entry['usage'];
+        }
+        
+        $result = [];
+
+        foreach ($data as $entry) {
+            $relativeUsage = intval(floor(($totalOrders / $entry['usage']) * 100));
+            $result[] = new PaymentMethodUsage(
+                $entry['name'],
+                $entry['usage'],
+                $relativeUsage,
+                $entry['amount']
+            );
+        }
+
+        return $result;
+    }
+
+    protected static function getTotalPaymentMethodUsage(): array
+    {
+        $result = [];
+
+        $status = array_filter(
+            array_keys(wc_get_order_statuses()),
+            fn (string $status): bool => !in_array($status, self::IGNORE_STATUS)
+        );
+
+        $orders = wc_get_orders([
+            'limit' => -1,
+            'type' => 'shop_order',
+            'status' => $status,
+            'return' => 'objects',
+        ]);
+       
+        /** @var Order $order */
+        foreach ($orders as $order) {
+            $method = $order->get_payment_method();
+
+            if (!array_key_exists($method, $result)) {
+                $result[$method] = [
+                    'name' => $order->get_payment_method_title(),
+                    'usage' => 0,
+                    'amount' => 0,
+                ];
+            }
+
+            $result[$method]['usage']++;
+            $result[$method]['amount'] += $order->get_total();
+        }
+
+        return $result;
     }
 }
