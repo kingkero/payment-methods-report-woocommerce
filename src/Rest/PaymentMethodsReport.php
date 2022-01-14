@@ -44,6 +44,7 @@ class PaymentMethodsReport
      */
     public static function getItems(WP_REST_Request $request): WP_REST_Response
     {
+        // TODO: use $request to filter response
 
         $paypal = new PaymentMethodUsage('PayPal', 159, 25, 753.31);
 
