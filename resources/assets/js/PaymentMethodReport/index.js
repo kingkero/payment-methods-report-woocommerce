@@ -1,16 +1,17 @@
 import { Fragment } from '@wordpress/element';
 import {__} from '@wordpress/i18n';
 import { ReportFilters, TableCard } from '@woocommerce/components';
-import { getPersistedQuery } from '@woocommerce/navigation';
 
 const PaymentMethodReport = ({ path, query} ) => (
   <Fragment>
+    {/*
     <ReportFilters
       query={query}
       path={ path}
       filters={[]}
       advancedFilters={{}}
     />
+    */}
     <TableCard
       title={__('Payment Methods', 'payment-methods-report-woocommerce')}
       headers={[
@@ -19,25 +20,24 @@ const PaymentMethodReport = ({ path, query} ) => (
           key: 'name',
           required: true,
           isLeftAligned: true,
-          isSortable: true,
         },
         {
           label: __('Absolute Usage', 'payment-methods-report-woocommerce'),
           key: 'absolute-usage',
+          required: true,
           isNumeric: true,
-          isSortable: true,
         },
         {
           label: __('Relative Usage', 'payment-methods-report-woocommerce'),
           key: 'relative-usage',
+          required: true,
           isNumeric: true,
-          isSortable: true,
         },
         {
           label: __('Money', 'payment-methods-report-woocommerce'),
           key: 'relative-usage',
+          required: true,
           isNumeric: true,
-          isSortable: true,
         },
       ]}
       rows={[
