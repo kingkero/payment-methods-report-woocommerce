@@ -38,27 +38,33 @@ class Plugin
             return;
         }
 
-        $info = $this->getAssetInfo('index');
-        $url = $this->baseUri . 'dist/index.js';
+        try {
+            $info = $this->getAssetInfo('index');
+            $url = $this->baseUri . 'dist/index.js';
 
-        wp_register_script(
-            'payment-methods-report',
-            $url,
-            $info['dependencies'],
-            $info['version'],
-            true
-        );
+            wp_register_script(
+                'payment-methods-report',
+                $url,
+                $info['dependencies'],
+                $info['version'],
+                true
+            );
 
-        if (
-            /**
-             * Should the index.js file be enqueued?
-             * 
-             * @since 1.0.0
-             * @param bool $shouldEnqueue
-             */
-            apply_filters('kk/paymentMethodsReport/indexJsEnqueue', true) === true
-        ) {
-            wp_enqueue_script('payment-methods-report');
+            if (
+                /**
+                 * Should the index.js file be enqueued?
+                 * 
+                 * @since 1.0.0
+                 * @param bool $shouldEnqueue
+                 */
+                apply_filters('kk/paymentMethodsReport/indexJsEnqueue', true) === true
+            ) {
+                wp_enqueue_script('payment-methods-report');
+            }
+        } catch (AssetException $e) {
+            if (defined('WP_DEBUG_LOG') && WP_DEBUG_LOG === true) {
+                error_log('Could not load asset "index": ' . $e->getMessage());
+            }
         }
     }
 
