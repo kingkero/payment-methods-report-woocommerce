@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace KK\PaymentMethodsReport\Rest;
 
+use KK\PaymentMethodsReport\DTO\PaymentMethodUsage;
 use WP_REST_Request;
+use WP_REST_Response;
 use WP_REST_Server;
 
 class PaymentMethodsReport
@@ -38,49 +40,21 @@ class PaymentMethodsReport
      * Return the items.
      *
      * @param WP_REST_Request $request
-     * @return array<array<array<string, string|int|float>>>
+     * @return WP_REST_Response
      */
-    public static function getItems(WP_REST_Request $request): array
+    public static function getItems(WP_REST_Request $request): WP_REST_Response
     {
-        // TODO: implement filter via $request
-        return [
-            [
-                [
-                    'display' => 'Paypal',
-                    'value' => 'Paypal',
-                ],
-                [
-                    'display' => '1234',
-                    'value' => 1234,
-                ],
-                [
-                    'display' => '35 %',
-                    'value' => 35,
-                ],
-                [
-                    'display' => '581,41 €',
-                    'value' => 581.41,
-                ],
-            ],
-            [
-                [
-                    'display' => 'Credit Card',
-                    'value' => 'Credit Card',
-                ],
-                [
-                    'display' => '4321',
-                    'value' => 4321,
-                ],
-                [
-                    'display' => '53 %',
-                    'value' => 53,
-                ],
-                [
-                    'display' => '185,41 €',
-                    'value' => 185.41,
-                ],
-            ],
+
+        $paypal = new PaymentMethodUsage('PayPal', 159, 25, 753.31);
+
+        $data = [
+            $paypal,
+            $paypal,
         ];
+
+        $response = new WP_REST_Response($data);
+
+        return $response;
     }
 
     /**
