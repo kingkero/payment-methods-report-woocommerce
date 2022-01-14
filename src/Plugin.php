@@ -6,6 +6,7 @@ namespace KK\PaymentMethodsReport;
 
 use Automattic\WooCommerce\Admin\Loader;
 use KK\PaymentMethodsReport\Exception\AssetException;
+use KK\PaymentMethodsReport\Rest\PaymentMethodsReport;
 
 class Plugin
 {
@@ -25,6 +26,10 @@ class Plugin
 
         add_action('admin_enqueue_scripts', [$this, 'enqueueIndex'], 10);
         add_filter('woocommerce_analytics_report_menu_items', [$this, 'reportPages'], 10);
+
+        add_action('rest_api_init', function() {
+            PaymentMethodsReport::registerRoute();
+        });
     }
 
     /**
