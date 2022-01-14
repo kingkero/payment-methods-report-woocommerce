@@ -16,8 +16,9 @@ const PaymentMethodReport = ({ path, query} ) => {
   const [data, setData] = useState(null)
 
   useEffect(() => {
+    // TODO: pass data from query to allow filtering
     apiFetch({
-      path:'kk/pmr/v1/report',
+      path: 'kk/pmr/v1/report',
     }).then(fetchedData => {
       setData(fetchedData)
     })

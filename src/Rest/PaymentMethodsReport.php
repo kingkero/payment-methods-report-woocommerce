@@ -34,8 +34,15 @@ class PaymentMethodsReport
         );
     }
 
+    /**
+     * Return the items.
+     *
+     * @param WP_REST_Request $request
+     * @return array<array<array<string, string|int|float>>>
+     */
     public static function getItems(WP_REST_Request $request): array
     {
+        // TODO: implement filter via $request
         return [
             [
                 [
@@ -76,9 +83,13 @@ class PaymentMethodsReport
         ];
     }
 
+    /**
+     * Check if current requestor is permitted.
+     *
+     * @return boolean
+     */
     public static function getItemsPermissionsCheck(): bool
     {
-        return true;
-        // return current_user_can('view_woocommerce_reports');
+        return current_user_can('view_woocommerce_reports');
     }
 }
