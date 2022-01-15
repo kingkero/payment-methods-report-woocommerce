@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace KK\PaymentMethodsReport\DTO;
 
 use JsonSerializable;
+use KK\PaymentMethodsReport\Helper\Formatter;
 
 class PaymentMethodUsage implements JsonSerializable
 {
     protected string $name;
     protected int $absoluteUsage;
-    protected int $relativeUsage;
+    protected float $relativeUsage;
     protected float $totalAmount;
 
     public function __construct(
         string $name,
         int $absoluteUsage,
-        int $relativeUsage,
+        float $relativeUsage,
         float $totalAmount
     ) {
         $this->name = $name;
@@ -27,11 +28,6 @@ class PaymentMethodUsage implements JsonSerializable
 
     public function jsonSerialize(): array
     {
-        $relativePercent = '0.' . $this->relativeUsage;
-        if ($this->relativeUsage === 100) {
-            $relativePercent = '100';
-        }
-
         return [
             [
                 'display' => $this->name,
@@ -42,11 +38,11 @@ class PaymentMethodUsage implements JsonSerializable
                 'value' => $this->absoluteUsage,
             ],
             [
-                'display' => $relativePercent,
+                'display' => Formatter::percent($this->relativeUsage),
                 'value' => $this->relativeUsage,
             ],
             [
-                'display' => $this->totalAmount . ' €',
+                'display' => Formatter::priceNoHtml($this->totalAmount),
                 'value' => $this->totalAmount,
             ],
         ];

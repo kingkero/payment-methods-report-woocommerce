@@ -86,11 +86,10 @@ class PaymentMethodsReport
         $result = [];
 
         foreach ($data as $entry) {
-            $relativeUsage = intval(floor(($totalOrders / $entry['usage']) * 100));
             $result[] = new PaymentMethodUsage(
                 $entry['name'],
                 $entry['usage'],
-                $relativeUsage,
+                ($entry['usage']/ $totalOrders),
                 $entry['amount']
             );
         }
