@@ -15,6 +15,7 @@ abstract class Formatter
     public static function priceNoHtml(float $price): string
     {
         $clean = strip_tags(wc_price($price));
+        // TODO: maybe drop wc_price? or find way we don't need to replace &foo;
         $clean = str_replace(
             [
                 '&nbsp;',

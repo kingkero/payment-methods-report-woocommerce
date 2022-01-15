@@ -55,6 +55,7 @@ class PaymentMethodsReport
     public static function getItems(WP_REST_Request $request): WP_REST_Response
     {
         // TODO: use $request to filter response
+        // TODO: cache response
 
         $data = self::getNicePaymentMethodUsages();
 
@@ -106,6 +107,7 @@ class PaymentMethodsReport
             fn (string $status): bool => !in_array($status, self::IGNORE_STATUS)
         );
 
+        // TODO: maybe use custom SQL query instead
         $orders = wc_get_orders([
             'limit' => -1,
             'type' => 'shop_order',
