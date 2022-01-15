@@ -8,7 +8,7 @@
  * Author:                  kingkero
  * Author URI:              https://github.com/kingkero
  * Text Domain:             payment-methods-report-woocommerce
- * Version:                 0.1.0
+ * Version:                 1.0.0
  * Requires PHP:            7.4
  *
  * WC requires at least:    6.0.0
