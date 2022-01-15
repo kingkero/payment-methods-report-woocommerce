@@ -16,5 +16,5 @@ This is an extension to WooCommerce Analytics that will display a new report on 
 == Screenshots ==
 
 == Changelog ==
-**0.1.0**:
+**1.0.0**:
 - initial release
