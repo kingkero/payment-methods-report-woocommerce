@@ -23,11 +23,18 @@ services:
       context: ./php
     restart: unless-stopped
     volumes:
-      - ../:/var/www/html/wp-content/plugins/payment-methods-report-woocommerce:ro
+      - ../:/var/www/html/wp-content/plugins/payment-methods-report-woocommerce:rw
     working_dir: /var/www/html/wp-content/plugins/payment-methods-report-woocommerce
     depends_on:
       - nginx
       - db
+
+  node:
+    image: node:16-alpine
+    restart: never
+    volumes:
+      - ../:/app:rw
+    working_dir: /app
 
 volumes:
   plugin:

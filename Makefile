@@ -2,13 +2,12 @@
 # originally MIT licensed
 
 # Executables (local)
-DOCKER_COMP      = docker compose --file ./local/compose.yaml
-DOCKER_COMP_NODE = docker compose --file ./local/node.compose.yaml
+DOCKER_COMP = docker compose --file ./local/compose.yaml
 
 # Docker containers
 PHP_CONT  = $(DOCKER_COMP) exec php
 DB_CONT   = $(DOCKER_COMP) exec -it db
-NODE_CONT = $(DOCKER_COMP_NODE) run node
+NODE_CONT = $(DOCKER_COMP) run node
 
 # Executables
 PHP      = $(PHP_CONT) php
@@ -47,7 +46,7 @@ vendor: ## Install vendors according to the current composer.lock file
 vendor: c=install --prefer-dist --no-dev --no-progress --no-scripts --no-interaction
 vendor: composer
 
-## —— Node ☊ ——————————————————————————————————————————————————————————————
+## —— Yarn 🧶 ——————————————————————————————————————————————————————————————
 yarn-install: ## Install node modules
 	@$(NODE_CONT) yarn
 
