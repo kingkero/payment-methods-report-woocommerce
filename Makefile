@@ -7,7 +7,7 @@ DOCKER_COMP = docker compose --file ./local/compose.yaml
 # Docker containers
 PHP_CONT  = $(DOCKER_COMP) exec php
 DB_CONT   = $(DOCKER_COMP) exec -it db
-NODE_CONT = $(DOCKER_COMP) run node
+NODE_CONT = $(DOCKER_COMP) run --rm node
 
 # Executables
 PHP      = $(PHP_CONT) php
