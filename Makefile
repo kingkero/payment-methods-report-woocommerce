@@ -2,11 +2,13 @@
 # originally MIT licensed
 
 # Executables (local)
-DOCKER_COMP = docker compose --file ./local/compose.yaml
+DOCKER_COMP      = docker compose --file ./local/compose.yaml
+DOCKER_COMP_NODE = docker compose --file ./local/node.compose.yaml
 
 # Docker containers
-PHP_CONT = $(DOCKER_COMP) exec php
-DB_CONT  = $(DOCKER_COMP) exec -it db
+PHP_CONT  = $(DOCKER_COMP) exec php
+DB_CONT   = $(DOCKER_COMP) exec -it db
+NODE_CONT = $(DOCKER_COMP_NODE) run node
 
 # Executables
 PHP      = $(PHP_CONT) php
@@ -44,3 +46,11 @@ composer: ## Run composer, pass the parameter "c=" to run a given command, examp
 vendor: ## Install vendors according to the current composer.lock file
 vendor: c=install --prefer-dist --no-dev --no-progress --no-scripts --no-interaction
 vendor: composer
+
+## —— Node ☊ ——————————————————————————————————————————————————————————————
+yarn-install: ## Install node modules
+	@$(NODE_CONT) yarn
+
+yarn: ## Run yarn, pass the parameter "c=" to run a given command, example: make yarn c='build'
+	@$(eval c ?=)
+	@$(NODE_CONT) yarn run $(c)

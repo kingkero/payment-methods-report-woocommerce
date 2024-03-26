@@ -24,6 +24,7 @@ services:
     restart: unless-stopped
     volumes:
       - ../:/var/www/html/wp-content/plugins/payment-methods-report-woocommerce:ro
+    working_dir: /var/www/html/wp-content/plugins/payment-methods-report-woocommerce
     depends_on:
       - nginx
       - db
