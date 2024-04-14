@@ -8,7 +8,7 @@
  * Author:                  kingkero
  * Author URI:              https://www.kero.codes/
  * Text Domain:             payment-methods-report-woocommerce
- * Version:                 1.0.0
+ * Version:                 1.0.1
  * Requires PHP:            8.1
  * Requires at least:       6.5
  * Requires Plugins:        woocommerce
