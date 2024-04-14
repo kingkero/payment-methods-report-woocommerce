@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request: ~
+  workflow_dispatch: ~
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Cache dependencies installed with composer"
+        uses: actions/cache@v4
+        with:
+          path: "${{ steps.determine-composer-cache-directory.outputs.directory }}"
+          key: "composer-${{ matrix.os }}-${{ matrix.php-version }}-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}"
+          restore-keys: |
+            composer-${{ matrix.os }}-${{ matrix.php-version }}-${{ matrix.dependencies }}-
+            composer-${{ matrix.os }}-${{ matrix.php-version }}-
+            composer-${{ matrix.os }}-
+            composer-
+
+      - name: Install dependencies
+        uses: php-actions/composer@v6
+        with:
+          command: install --no-progress --no-interaction --ignore-platform-reqs --optimize-autoloader
+
+      - name: Run tests
+        uses: php-actions/composer@v6
+        with:
+          command: test
