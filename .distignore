@@ -24,3 +24,5 @@ tests
 node_modules
 deploy
 resources
+local
+Makefile

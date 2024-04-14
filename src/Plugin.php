@@ -39,10 +39,6 @@ class Plugin
      */
     public function enqueueIndex(): void
     {
-        if (!class_exists( 'Automattic\WooCommerce\Admin\Loader') || !Loader::is_admin_or_embed_page()) {
-            return;
-        }
-
         try {
             $info = $this->getAssetInfo('index');
             $url = $this->baseUri . 'dist/index.js';

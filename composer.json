@@ -23,7 +23,7 @@
     }
   },
   "require": {
-    "php" : ">=7.4"
+    "php" : ">=8.1"
   },
   "require-dev": {
     "php-stubs/woocommerce-stubs": "^6.0"
