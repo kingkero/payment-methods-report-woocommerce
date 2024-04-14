@@ -17,16 +17,13 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: "Cache dependencies installed with composer"
         uses: actions/cache@v4
         with:
-          path: "${{ steps.determine-composer-cache-directory.outputs.directory }}"
-          key: "composer-${{ matrix.os }}-${{ matrix.php-version }}-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}"
-          restore-keys: |
-            composer-${{ matrix.os }}-${{ matrix.php-version }}-${{ matrix.dependencies }}-
-            composer-${{ matrix.os }}-${{ matrix.php-version }}-
-            composer-${{ matrix.os }}-
-            composer-
+          path: "/tmp/composer-cache"
+          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
       - name: Install dependencies
         uses: php-actions/composer@v6
