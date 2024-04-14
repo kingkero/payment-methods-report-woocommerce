@@ -1,18 +1,19 @@
-FROM php:8.0-fpm-alpine AS base
+FROM php:8.1-fpm-alpine AS base
 
 COPY --from=composer:2.7.2 /usr/bin/composer /usr/local/bin/composer
+COPY --from=wordpress:cli-2.10.0-php8.1 /usr/local/bin/wp /usr/local/bin/wp
 
 ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/download/2.2.5/install-php-extensions /usr/local/bin/
 
 RUN install-php-extensions \
-        gd \
-        xdebug \
-        bcmath \
-        exif \
-        intl \
-        mysqli \
-        zip \
-        opcache
+    gd \
+    xdebug \
+    bcmath \
+    exif \
+    intl \
+    mysqli \
+    zip \
+    opcache
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
@@ -43,6 +44,24 @@ RUN { \
 #########
 # STAGE #
 #########
-FROM base AS plugin
+FROM base AS wordpress
 
-WORKDIR /var/www/html/wp-content/plugins/payment-methods-report-woocommerce
+#COPY ./entrypoint.sh /usr/local/bin/entrypoint
+
+RUN mkdir -p /var/www
+WORKDIR /var/www
+
+# TODO:  fix entrypoint
+
+#ENTRYPOINT ["/usr/local/bin/entrypoint"]
+
+#########
+# STAGE #
+#########
+FROM wordpress AS plugin
+
+RUN apk add --no-cache \
+    bash \
+    git \
+
+#WORKDIR /var/www/web/app/plugins/payment-methods-report-woocommerce

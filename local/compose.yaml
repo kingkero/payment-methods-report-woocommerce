@@ -3,8 +3,8 @@ services:
     image: nginx:1.25-alpine
     restart: unless-stopped
     volumes:
-      - html:/var/www/html:rw
-      - ../:/var/www/html/wp-content/plugins/payment-methods-report-woocommerce:ro
+      - www:/var/www:rw
+      - ../:/var/www/web/app/plugins/payment-methods-report-woocommerce:ro
       - ./conf/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - target: 80
@@ -15,7 +15,7 @@ services:
     image: mariadb:11.3
     environment:
       MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "true"
-
+      MARIADB_DATABASE: "wordpress"
     volumes:
       - db_data:/var/lib/mysql:Z
 
@@ -25,9 +25,10 @@ services:
       target: plugin
     restart: unless-stopped
     volumes:
-      - html:/var/www/html:rw
-      - ../:/var/www/html/wp-content/plugins/payment-methods-report-woocommerce:rw
-    working_dir: /var/www/html/wp-content/plugins/payment-methods-report-woocommerce
+      - www:/var/www:rw
+      - ../:/var/www/web/app/plugins/payment-methods-report-woocommerce:rw
+    env_file:
+      - ./php/.env
     depends_on:
       - nginx
       - db
@@ -40,5 +41,5 @@ services:
     working_dir: /app
 
 volumes:
-  html:
+  www:
   db_data:
