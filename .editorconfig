@@ -17,5 +17,5 @@ indent_style = tab
 [Jenkinsfile]
 indent_size = 2
 
-[*.{js,css,scss,json,yml,toml}]
+[*.{js,css,scss,json,yml,yaml,toml}]
 indent_size = 2

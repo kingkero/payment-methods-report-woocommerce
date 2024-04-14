@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace KK\PaymentMethodsReport\Rest;
 
-use Automattic\WooCommerce\Admin\Overrides\Order;
 use KK\PaymentMethodsReport\DTO\PaymentMethodUsage;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -49,8 +48,8 @@ class PaymentMethodsReport
     /**
      * Return the items.
      *
-     * @param WP_REST_Request $request
-     * @return WP_REST_Response
+     * @param \WP_REST_Request $request
+     * @return \WP_REST_Response
      */
     public static function getItems(WP_REST_Request $request): WP_REST_Response
     {
@@ -72,9 +71,13 @@ class PaymentMethodsReport
     public static function getItemsPermissionsCheck(): bool
     {
         return true;
-        return current_user_can('view_woocommerce_reports');
+        // return current_user_can('view_woocommerce_reports');
+        // TODO: Fix permission
     }
 
+    /**
+     * @return \KK\PaymentMethodsReport\DTO\PaymentMethodUsage[]
+     */
     protected static function getNicePaymentMethodUsages(): array
     {
         $data = self::getTotalPaymentMethodUsage();
@@ -83,14 +86,14 @@ class PaymentMethodsReport
         foreach ($data as $entry) {
             $totalOrders += $entry['usage'];
         }
-        
+
         $result = [];
 
         foreach ($data as $entry) {
             $result[] = new PaymentMethodUsage(
                 $entry['name'],
                 $entry['usage'],
-                ($entry['usage']/ $totalOrders),
+                ($entry['usage'] / $totalOrders),
                 $entry['amount']
             );
         }
@@ -98,13 +101,16 @@ class PaymentMethodsReport
         return $result;
     }
 
+    /**
+     * @return array<array{name: string, usage: int, amount: float}>
+     */
     protected static function getTotalPaymentMethodUsage(): array
     {
         $result = [];
 
         $status = array_filter(
             array_keys(wc_get_order_statuses()),
-            fn (string $status): bool => !in_array($status, self::IGNORE_STATUS)
+            static fn (string $status): bool => !in_array($status, self::IGNORE_STATUS, true)
         );
 
         // TODO: maybe use custom SQL query instead
@@ -114,8 +120,11 @@ class PaymentMethodsReport
             'status' => $status,
             'return' => 'objects',
         ]);
-       
-        /** @var Order $order */
+        if (!is_array($orders)) {
+            return $result;
+        }
+
+        /** @var \Automattic\WooCommerce\Admin\Overrides\Order $order */
         foreach ($orders as $order) {
             $method = $order->get_payment_method();
 

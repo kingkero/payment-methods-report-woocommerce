@@ -6,10 +6,12 @@
  * Plugin URI:              https://github.com/kingkero/payment-methods-report-woocommerce
  * Description:             Adds a new report to the WooCommerce analytics section about used payment methods.
  * Author:                  kingkero
- * Author URI:              https://github.com/kingkero
+ * Author URI:              https://www.kero.codes/
  * Text Domain:             payment-methods-report-woocommerce
- * Version:                 1.0.0
- * Requires PHP:            7.4
+ * Version:                 1.0.1
+ * Requires PHP:            8.1
+ * Requires at least:       6.5
+ * Requires Plugins:        woocommerce
  *
  * WC requires at least:    6.0.0
  *
