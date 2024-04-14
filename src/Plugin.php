@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace KK\PaymentMethodsReport;
 
-use Automattic\WooCommerce\Admin\Loader;
-use KK\PaymentMethodsReport\Exception\AssetException;
 use KK\PaymentMethodsReport\Rest\PaymentMethodsReport;
 
 class Plugin
@@ -27,7 +25,7 @@ class Plugin
         add_action('admin_enqueue_scripts', [$this, 'enqueueIndex'], 10);
         add_filter('woocommerce_analytics_report_menu_items', [$this, 'reportPages'], 10);
 
-        add_action('rest_api_init', function() {
+        add_action('rest_api_init', function () {
             PaymentMethodsReport::registerRoute();
         });
     }
@@ -54,7 +52,7 @@ class Plugin
             if (
                 /**
                  * Should the index.js file be enqueued?
-                 * 
+                 *
                  * @since 1.0.0
                  * @param bool $shouldEnqueue
                  */
@@ -62,7 +60,7 @@ class Plugin
             ) {
                 wp_enqueue_script('payment-methods-report');
             }
-        } catch (AssetException $e) {
+        } catch (\KK\PaymentMethodsReport\Exception\AssetException $e) {
             if (defined('WP_DEBUG_LOG') && WP_DEBUG_LOG === true) {
                 error_log('Could not load asset "index": ' . $e->getMessage());
             }
@@ -74,13 +72,13 @@ class Plugin
      *
      * @param string $name
      * @return array{dependencies: string[], version: string}
-     * @throws AssetException
+     * @throws \KK\PaymentMethodsReport\Exception\AssetException
      */
     protected function getAssetInfo(string $name): array
     {
         $infoPath = $this->baseDir . DIRECTORY_SEPARATOR . 'dist' . DIRECTORY_SEPARATOR . $name . '.asset.php';
         if (!file_exists($infoPath)) {
-            throw new AssetException('Config not found at ' . $infoPath);
+            throw new \KK\PaymentMethodsReport\Exception\AssetException('Config not found at ' . $infoPath);
         }
 
         $defaults = [
@@ -96,7 +94,7 @@ class Plugin
          * it via `kk/paymentMethodsReport/assetInfo_index`.
          *
          * @since 1.0.0
-         * @param array{dependencies: string[], version: string} The asset info of the script.
+         * @param array{dependencies: string[], version: string} $filter The asset info of the script.
          */
         return apply_filters(
             'kk/paymentMethodsReport/assetInfo_' . $name,

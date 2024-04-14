@@ -21,8 +21,8 @@
     "url": "https://github.com/kingkero/payment-methods-report-woocommerce/issues"
   },
   "devDependencies": {
-    "@woocommerce/dependency-extraction-webpack-plugin": "1.6.0",
-    "@wordpress/scripts": "^19.2.2"
+    "@wordpress/dependency-extraction-webpack-plugin": "^2.3.0",
+    "@wordpress/scripts": "^27.6.0"
   },
   "scripts": {
     "build": "wp-scripts build resources/assets/js/index.js --output-path=dist",
@@ -31,5 +31,6 @@
     "packages-update": "wp-scripts packages-update",
     "lint:pkg-json": "wp-scripts lint-pkg-json",
     "start": "wp-scripts start resources/assets/js/index.js --output-path=dist"
-  }
+  },
+  "dependencies": {}
 }

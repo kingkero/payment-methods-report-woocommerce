@@ -1,0 +1,11 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^@param array\\{dependencies\\: array\\<string\\>, version\\: string\\} \\$filter does not accept actual type of parameter\\: non\\-empty\\-array\\.$#"
+			count: 1
+			path: src/Plugin.php
+
+		-
+			message: "#^Method KK\\\\PaymentMethodsReport\\\\Rest\\\\PaymentMethodsReport\\:\\:getItems\\(\\) has parameter \\$request with generic class WP_REST_Request but does not specify its types\\: T$#"
+			count: 1
+			path: src/Rest/PaymentMethodsReport.php
