@@ -39,6 +39,8 @@ services:
     volumes:
       - ../:/app:rw
     working_dir: /app
+    environment:
+      NODE_OPTIONS: "--openssl-legacy-provider"
 
 volumes:
   www:
