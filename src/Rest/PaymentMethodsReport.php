@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace KK\PaymentMethodsReport\Rest;
 
-use Automattic\WooCommerce\Admin\Overrides\Order;
 use KK\PaymentMethodsReport\DTO\PaymentMethodUsage;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -49,8 +48,8 @@ class PaymentMethodsReport
     /**
      * Return the items.
      *
-     * @param WP_REST_Request $request
-     * @return WP_REST_Response
+     * @param \WP_REST_Request $request
+     * @return \WP_REST_Response
      */
     public static function getItems(WP_REST_Request $request): WP_REST_Response
     {
@@ -77,7 +76,7 @@ class PaymentMethodsReport
     }
 
     /**
-     * @return PaymentMethodUsage[]
+     * @return \KK\PaymentMethodsReport\DTO\PaymentMethodUsage[]
      */
     protected static function getNicePaymentMethodUsages(): array
     {
@@ -125,7 +124,7 @@ class PaymentMethodsReport
             return $result;
         }
 
-        /** @var Order $order */
+        /** @var \Automattic\WooCommerce\Admin\Overrides\Order $order */
         foreach ($orders as $order) {
             $method = $order->get_payment_method();
 
