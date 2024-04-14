@@ -10,6 +10,8 @@
  * Text Domain:             payment-methods-report-woocommerce
  * Version:                 1.0.0
  * Requires PHP:            8.1
+ * Requires at least:       6.5
+ * Requires Plugins:        woocommerce
  *
  * WC requires at least:    6.0.0
  *
