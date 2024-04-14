@@ -30,16 +30,24 @@
     "szepeviktor/phpstan-wordpress": "^1.3",
     "phpstan/extension-installer": "^1.3",
     "phpstan/phpstan": "^1.10",
-    "phpstan/phpstan-strict-rules": "^1.5"
+    "phpstan/phpstan-strict-rules": "^1.5",
+    "php-parallel-lint/php-parallel-lint": "^1.4",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
   },
   "config": {
     "allow-plugins": {
-      "phpstan/extension-installer": true
+      "phpstan/extension-installer": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "scripts":{
+    "test:php": "parallel-lint src",
+    "test:phpcs": "phpcs",
+    "test:phpcbf": "phpcbf",
     "test:phpstan": "phpstan analyse --memory-limit 2G",
     "test": [
+      "@test:php",
+      "@test:phpcs",
       "@test:phpstan"
     ]
   }
