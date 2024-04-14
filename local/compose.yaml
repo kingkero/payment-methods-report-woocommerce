@@ -27,6 +27,7 @@ services:
     volumes:
       - www:/var/www:rw
       - ../:/var/www/web/app/plugins/payment-methods-report-woocommerce:rw
+    working_dir: /var/www/web/app/plugins/payment-methods-report-woocommerce
     env_file:
       - ./php/.env
     depends_on:

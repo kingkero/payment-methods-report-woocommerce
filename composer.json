@@ -36,5 +36,11 @@
     "allow-plugins": {
       "phpstan/extension-installer": true
     }
+  },
+  "scripts":{
+    "test:phpstan": "phpstan analyse --memory-limit 2G",
+    "test": [
+      "@test:phpstan"
+    ]
   }
 }
