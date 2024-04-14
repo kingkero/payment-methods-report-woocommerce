@@ -72,9 +72,13 @@ class PaymentMethodsReport
     public static function getItemsPermissionsCheck(): bool
     {
         return true;
-        return current_user_can('view_woocommerce_reports');
+        // return current_user_can('view_woocommerce_reports');
+        // TODO: Fix permission
     }
 
+    /**
+     * @return PaymentMethodUsage[]
+     */
     protected static function getNicePaymentMethodUsages(): array
     {
         $data = self::getTotalPaymentMethodUsage();
@@ -98,13 +102,16 @@ class PaymentMethodsReport
         return $result;
     }
 
+    /**
+     * @return array<array{name: string, usage: int, amount: float}>
+     */
     protected static function getTotalPaymentMethodUsage(): array
     {
         $result = [];
 
         $status = array_filter(
             array_keys(wc_get_order_statuses()),
-            fn (string $status): bool => !in_array($status, self::IGNORE_STATUS)
+            static fn (string $status): bool => !in_array($status, self::IGNORE_STATUS, true)
         );
 
         // TODO: maybe use custom SQL query instead
@@ -114,6 +121,9 @@ class PaymentMethodsReport
             'status' => $status,
             'return' => 'objects',
         ]);
+        if (!is_array($orders)) {
+            return $result;
+        }
        
         /** @var Order $order */
         foreach ($orders as $order) {

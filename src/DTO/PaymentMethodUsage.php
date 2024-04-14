@@ -26,6 +26,9 @@ class PaymentMethodUsage implements JsonSerializable
         $this->totalAmount = $totalAmount;
     }
 
+    /**
+     * @return array<array{display: string|int|float, value: string|int|float}>
+     */
     public function jsonSerialize(): array
     {
         return [

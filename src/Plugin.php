@@ -96,7 +96,7 @@ class Plugin
          * it via `kk/paymentMethodsReport/assetInfo_index`.
          *
          * @since 1.0.0
-         * @param array{dependencies: string[], version: string} The asset info of the script.
+         * @param array{dependencies: string[], version: string} $filter The asset info of the script.
          */
         return apply_filters(
             'kk/paymentMethodsReport/assetInfo_' . $name,
