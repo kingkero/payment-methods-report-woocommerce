@@ -87,14 +87,14 @@ class PaymentMethodsReport
         foreach ($data as $entry) {
             $totalOrders += $entry['usage'];
         }
-        
+
         $result = [];
 
         foreach ($data as $entry) {
             $result[] = new PaymentMethodUsage(
                 $entry['name'],
                 $entry['usage'],
-                ($entry['usage']/ $totalOrders),
+                ($entry['usage'] / $totalOrders),
                 $entry['amount']
             );
         }
@@ -124,7 +124,7 @@ class PaymentMethodsReport
         if (!is_array($orders)) {
             return $result;
         }
-       
+
         /** @var Order $order */
         foreach ($orders as $order) {
             $method = $order->get_payment_method();

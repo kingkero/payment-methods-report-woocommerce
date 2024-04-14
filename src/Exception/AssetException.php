@@ -7,4 +7,5 @@ namespace KK\PaymentMethodsReport\Exception;
 use Exception;
 
 class AssetException extends Exception
-{}
+{
+}

@@ -27,7 +27,7 @@ class Plugin
         add_action('admin_enqueue_scripts', [$this, 'enqueueIndex'], 10);
         add_filter('woocommerce_analytics_report_menu_items', [$this, 'reportPages'], 10);
 
-        add_action('rest_api_init', function() {
+        add_action('rest_api_init', function () {
             PaymentMethodsReport::registerRoute();
         });
     }
@@ -54,7 +54,7 @@ class Plugin
             if (
                 /**
                  * Should the index.js file be enqueued?
-                 * 
+                 *
                  * @since 1.0.0
                  * @param bool $shouldEnqueue
                  */
