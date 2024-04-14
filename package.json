@@ -1,7 +1,7 @@
 {
   "name": "payment-methods-report",
   "title": "Payment Methods Report for WooCommerce",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Adds a new report to the WooCommerce analytics section about used payment methods.",
   "author": {
     "name": "kingkero",
