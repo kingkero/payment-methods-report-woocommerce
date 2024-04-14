@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request: ~
+  workflow_dispatch: ~
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: Tests
+    strategy:
+      matrix:
+        version: [ "8.1", "8.2", "8.3" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: "Cache dependencies installed with composer"
+        uses: actions/cache@v4
+        with:
+          path: "/tmp/composer-cache"
+          key: ${{ runner.os }}-${{ matrix.version }}${{ hashFiles('**/composer.lock') }}
+
+      - name: Install dependencies
+        uses: php-actions/composer@v6
+        with:
+          php_version: ${{ matrix.version }}
+          command: install --no-progress --no-interaction --ignore-platform-reqs --optimize-autoloader
+
+      - name: Run tests
+        uses: php-actions/composer@v6
+        with:
+          php_version: ${{ matrix.version }}
+          command: test
