@@ -36,6 +36,9 @@ if [ ! -f /var/www/composer.json ]; then
     # WooCommerce Demo Data
     wp import web/app/plugins/woocommerce/sample-data/sample_products.xml --authors=create
 
+    # Custom Woo Demo Data
+    CUSTOMER=$(wp wc customer create --email='customer@example.com' --user=1 --porcelain)
+
 fi
 
 exec "$@"
