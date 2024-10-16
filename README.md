@@ -1,3 +1,11 @@
+# Archived
+
+I do not
+
+* have the time to support this.
+* continue contributing to WordPress under Matt's leadership after the WP
+  Engine debacle.
+
 # Payment Methods Report for WooCommerce
 
 This is an extension to [WooCommerce Analytics](https://woocommerce.com/document/woocommerce-analytics/) that will display a new report on the usage of configured payment methods.
